@@ -1,0 +1,29 @@
+body{
+    font-family: sans-serif;
+}
+
+.boek {
+    padding: 1em;
+    clear: left;
+}
+
+.boek__cover{
+    float: left;
+    padding: 0 3rem 0 0;
+    max-width: 300px;
+}
+
+.boek__titel{
+    margin-top: 0;
+    color: royalblue;
+    font-size: 1.5em;
+}
+
+.boek__uitgave::after, .boek__ean::after, .boek__taal::after{
+    content: " | ";
+}
+
+.boek__prijs{
+    font-size: 2em;
+    color: royalblue;
+}
