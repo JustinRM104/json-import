@@ -1,10 +1,13 @@
-const boeken = document.getElementById('boeken');
-const xhr    = new XMLHttpRequest();
+  
+const boeken     = document.getElementById('boeken');
+const xhr        = new XMLHttpRequest();
+const taalkeuze  = document.querySelectorAll('.filter__cb');
+const selectSort = document.querySelector('.filter__select');
 
 xhr.onreadystatechange = () => {
     if(xhr.readyState == 4 && xhr.status == 200) {
         let resultaat = JSON.parse(xhr.responseText);
-        boekenObject.data = resultaat;
+        boekenObject.filteren( resultaat );
         boekenObject.uitvoeren();
     }
 }
@@ -12,8 +15,44 @@ xhr.onreadystatechange = () => {
 xhr.open('GET', 'boeken.json', true);
 xhr.send();
 
-const boekenObject = {
+const boekObject = {
+    taalFilter: ['Engels', 'Duits', 'Nederlands'],
+    es: 'titel',
+    oplopend: 1,
+
+    filteren( gegevens ) {
+        this.data = gegevens.filter( (bk) => {
+            let bool = false;
+                this.taalFilter.forEach( (taal) => {
+                    if(bk.taal == taal) {
+                        bool = true;
+                    } 
+                })
+            return bool;
+        })
+    },
+    datumOmzetten(datumString) {
+        let datum = new Date(datumString);
+        let jaar  = datum.getFullYear();
+        let maand = this.getMaandnaam(datum.getMonth());
+        return `${maand} ${jaar}`;
+    },
+    sorteren() {
+        if(this.es == 'titel') {
+            this.data.sort( (a,b) => ( a.titel.toUpperCase() > b.titel.toUpperCase() ) ? this.oplopend : -1*this.oplopend);
+        } else if (this.es == 'paginas') {
+            this.data.sort( (a,b) => ( a.paginas > b.paginas ) ? this.oplopend : -1*this.oplopend);
+        } else if (this.es == 'uitgave') {
+            this.data.sort( (a,b) => ( a.uitgave > b.uitgave ) ? this.oplopend : -1*this.oplopend);
+        } else if (this.es == 'prijs') {
+            this.data.sort( (a,b) => ( a.prijs > b.prijs ) ? this.oplopend : -1*this.oplopend);
+        } else if (this.es == 'auteur') {
+            this.data.sort( (a,b) => ( a.auteurs[0].achternaam > b.auteurs[0].achternaam ) ? this.oplopend : -1*this.oplopend);
+        }
+    },
+
     uitvoeren() {
+        this.sorteren();
         let htmlUitvoer = "";
         this.data.forEach( boek => {
             let titel = "";
@@ -29,7 +68,8 @@ const boekenObject = {
                 if(index >= boek.auteurs.length - 1) { sep = ""; }
                 auteurs += auteur.voornaam + " " + tv + auteur.achternaam + sep;
             })
-            
+
+            // HTML variable toevoegen
             htmlUitvoer += `<section class="boek">`;
             htmlUitvoer += `<img class="boek__cover" src="${boek.cover}" alt="${titel}">`;
             htmlUitvoer += `<h3 class="boek__titel">${titel}</h3>`;
@@ -42,12 +82,6 @@ const boekenObject = {
             htmlUitvoer += `</section>`;
         });
         boeken.innerHTML = htmlUitvoer;
-    },
-    datumOmzetten(datumString) {
-        let datum = new Date(datumString);
-        let jaar  = datum.getFullYear();
-        let maand = this.getMaandnaam(datum.getMonth());
-        return `${maand} ${jaar}`;
     },
     getMaandnaam(m) {
         let maand = "";
@@ -69,3 +103,27 @@ const boekenObject = {
         return maand;
     }
 }
+
+const changeFilter = () => {
+    let checkedFilter = [];
+    taalkeuze.forEach( cb => {
+        if(cb.checked) checkedFilter.push(cb.value);
+    });
+    boekObject.taalFilter = checkedFilter;
+    boekObject.filteren(JSON.parse(xhr.responseText));
+    boekObject.uitvoeren();
+}
+
+taalkeuze.forEach( cb => cb.addEventListener('change', changeFilter));
+
+const changeSortOption = () => {
+    boekObject.es = selectSort.value;
+    boekObject.uitvoeren();
+}
+
+selectSort.addEventListener('change', changeSortOption);
+
+document.querySelectorAll('.filteren__rb').forEach( rb => rb.addEventListener('change', () => {
+    boekObject.oplopend = rb.value;
+    boekObject.uitvoeren();
+}))

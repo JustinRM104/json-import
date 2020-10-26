@@ -16,6 +16,21 @@
       "prijs": 69.50
     },
     {
+      "titel": "Boek justin",
+      "cover": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-thriller-book-cover-design-template-3675ae3e3ac7ee095fc793ab61b812cc_screen.jpg?ts=1588152105",
+      "auteurs": [
+        {
+          "voornaam": "Justin",
+          "achternaam": "Rodriguez"
+        }
+      ],
+      "uitgave": "2020-10",
+      "paginas": 1400,
+      "taal": "Nederlands",
+      "ean": 9789492183989,
+      "prijs": 69.50
+    },
+    {
       "titel": "Koffie, kaffer & katoen",
       "cover": "https://media.s-bol.com/7jzRgZw5k6B/550x826.jpg",
       "auteurs": [

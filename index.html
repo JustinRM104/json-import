@@ -4,11 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Justin Rodriguez Montoya">
     <title>Boekenlijst van Justin</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Kies uit de volgende boeken!</h1>
+
+   <div class="filter">
+    <label class="filter__cb-label">
+        <input type="checkbox" class="filteren__cb" value="Nederlands" checked>
+        Nederlands
+    </label>
+
+    <label class="filter__cb-label">
+        <input type="checkbox" class="filteren__cb" value="Engels" checked>
+        Engels
+    </label>
+
+    <label class="filter__cb-label">
+        <input type="checkbox" class="filteren__cb" value="Duits" checked>
+        Duits
+    </label>
+
+    <span class="filter__sorteren">
+        <label class="filter__select--label"> Sorteren op:
+            <select class="filter__select">
+                <option value="titel">Titel</option>
+                <option value="auteur">Auteur</option>
+                <option value="uitgave">Publicatie datum</option>
+                <option value="paginas">Pagina's</option>
+                <option value="prijs">Prijs</option>
+            </select>
+        </label>
+
+        <label>
+            <input type="radio" name="opaf" class="filter__rb" checked value="1">Oplopend
+        </label>
+
+        <label>
+            <input type="radio" name="opaf" class="filter__rb" value="-1">Aflopend
+        </label>
+    </span>
+    </div>
+
     <div id="boeken"></div>
 
     <script src="boek.js"></script>
