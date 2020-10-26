@@ -7,8 +7,8 @@ const selectSort = document.querySelector('.filter__select');
 xhr.onreadystatechange = () => {
     if(xhr.readyState == 4 && xhr.status == 200) {
         let resultaat = JSON.parse(xhr.responseText);
-        boekenObject.filteren( resultaat );
-        boekenObject.uitvoeren();
+        boekObject.filteren( resultaat );
+        boekObject.uitvoeren();
     }
 }
 
