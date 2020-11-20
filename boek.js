@@ -72,14 +72,16 @@ const boekObject = {
             // HTML variable toevoegen
             htmlUitvoer += `<section class="boek">`;
             htmlUitvoer += `<img class="boek__cover" src="${boek.cover}" alt="${titel}">`;
+            htmlUitvoer += `<div class="boek__info">`
             htmlUitvoer += `<h3 class="boek__titel">${titel}</h3>`;
             htmlUitvoer += `<p class="boek__auteurs">${auteurs}</p>`
             htmlUitvoer += `<span class="boek__uitgave">Datum van uitgave: ${this.datumOmzetten(boek.uitgave)}</span>`
             htmlUitvoer += `<span class="boek__ean"> EAN: ${boek.ean}</span>`
             htmlUitvoer += `<span class="boek__taal"> Taal: ${boek.taal}</span>`
             htmlUitvoer += `<span class="boek__pagina">Pagina's: ${boek.paginas}</span>`
-            htmlUitvoer += `<div class="boek__prijs"> ${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</div>`
-            htmlUitvoer += `</section>`;
+            htmlUitvoer += `<div class="boek__prijs"> ${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}
+                        <a href="#" class="boek__bestel-knop">Bestellen</a></div>`;
+            htmlUitvoer += `</div></section>`;
         });
         boeken.innerHTML = htmlUitvoer;
     },
