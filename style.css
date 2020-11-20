@@ -73,7 +73,6 @@ body{
 .boek__bestel-knop:hover {
     color: wheat;
     background-color: red;
-    font-weight: 900;
 
 }
 .boek__prijs{

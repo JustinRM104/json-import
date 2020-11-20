@@ -15,6 +15,10 @@ xhr.onreadystatechange = () => {
 xhr.open('GET', 'boeken.json', true);
 xhr.send();
 
+const ww = {
+    bestelling: []
+}
+
 const boekObject = {
     taalFilter: ['Engels', 'Duits', 'Nederlands'],
     es: 'titel',
@@ -80,10 +84,17 @@ const boekObject = {
             htmlUitvoer += `<span class="boek__taal"> Taal: ${boek.taal}</span>`
             htmlUitvoer += `<span class="boek__pagina">Pagina's: ${boek.paginas}</span>`
             htmlUitvoer += `<div class="boek__prijs"> ${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}
-                        <a href="#" class="boek__bestel-knop">Bestellen</a></div>`;
+                        <a href="#" class="boek__bestel-knop" data-role="${boek.ean}">Bestellen</a></div>`;
             htmlUitvoer += `</div></section>`;
         });
         boeken.innerHTML = htmlUitvoer;
+
+        document.querySelectorAll('.boek__bestel-knop').forEach(knop => {
+            knop.addEventListener('click', e => {
+                e.preventDefault();
+                let boekID = e.target.getAttribute('data-role');
+            })
+        });
     },
     getMaandnaam(m) {
         let maand = "";
