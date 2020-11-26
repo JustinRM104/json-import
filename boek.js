@@ -3,6 +3,7 @@ const boeken     = document.getElementById('boeken');
 const xhr        = new XMLHttpRequest();
 const taalkeuze  = document.querySelectorAll('.filter__cb');
 const selectSort = document.querySelector('.filter__select');
+const aantalInWinkelwagen = document.querySelectorAll('.ww__aantal');
 
 xhr.onreadystatechange = () => {
     if(xhr.readyState == 4 && xhr.status == 200) {
@@ -18,6 +19,8 @@ xhr.send();
 const ww = {
     bestelling: []
 }
+ww.bestelling = JSON.parse(localStorage.wwBestelling);
+aantalInWinkelwagen.innerHTML = ww.bestelling.length;
 
 const boekObject = {
     taalFilter: ['Engels', 'Duits', 'Nederlands'],
@@ -93,6 +96,12 @@ const boekObject = {
             knop.addEventListener('click', e => {
                 e.preventDefault();
                 let boekID = e.target.getAttribute('data-role');
+                let gekliktBoek = this.data.filter( b => b.ean == boekID);
+
+                ww.bestelling.push(gekliktBoek[0]);
+                aantalInWinkelwagen.innerHTML = ww.bestelling.length;
+                localStorage.wwBestelling = JSON.stringify(ww.bestelling);
+
             })
         });
     },
