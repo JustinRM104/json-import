@@ -17,10 +17,24 @@ xhr.open('GET', 'boeken.json', true);
 xhr.send();
 
 const ww = {
-    bestelling: []
+    bestelling: [],
+
+    boekToevoegen(obj) {
+        ww.bestelling.push(obj);
+        aantalInWinkelwagen.innerHTML = this.bestelling.length;       
+    },
+
+    dataOpslaan() {
+        localStorage.wwBestelling = JSON.stringify(this.bestelling);
+    },
+
+    dataOphalen() {
+        this.bestelling = JSON.parse(localStorage.wwBestelling);
+        aantalInWinkelwagen.innerHTML = ww.bestelling.length;
+    } 
 }
-ww.bestelling = JSON.parse(localStorage.wwBestelling);
-aantalInWinkelwagen.innerHTML = ww.bestelling.length;
+
+ww.dataOphalen();
 
 const boekObject = {
     taalFilter: ['Engels', 'Duits', 'Nederlands'],
@@ -97,10 +111,7 @@ const boekObject = {
                 e.preventDefault();
                 let boekID = e.target.getAttribute('data-role');
                 let gekliktBoek = this.data.filter( b => b.ean == boekID);
-
-                ww.bestelling.push(gekliktBoek[0]);
-                aantalInWinkelwagen.innerHTML = ww.bestelling.length;
-                localStorage.wwBestelling = JSON.stringify(ww.bestelling);
+                ww.boekToevoegen(gekliktBoek[0]);
 
             })
         });
