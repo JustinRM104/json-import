@@ -1,6 +1,7 @@
 body{
     font-family: sans-serif;
     overflow-x: hidden;
+    width: 100%;
 }
 
 .ww {
@@ -13,7 +14,7 @@ body{
     height: 3em;
 }
 
-.ww__aantal {
+#ww__aantal {
     font-size: .6em;
     position: absolute;
     top: -.3em;
@@ -101,17 +102,17 @@ body{
 }
 
 #haalformulier {
-    display: none;
+    opacity: 0;
 }
 
-#haalFormulier:checked ~ .bestelformulier {
+#haalformulier:checked ~ .bestelformulier {
     transform: translateX(0vw);
 }
 
 .bestelformulier {
     background-color: whitesmoke;
     position: absolute;
-    width: 90vw;
+    width: 80vw;
     min-height: 90vh;
     top: 0em;
     border-radius: 2em;

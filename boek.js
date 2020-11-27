@@ -3,7 +3,7 @@ const boeken     = document.getElementById('boeken');
 const xhr        = new XMLHttpRequest();
 const taalkeuze  = document.querySelectorAll('.filter__cb');
 const selectSort = document.querySelector('.filter__select');
-const aantalInWinkelwagen = document.querySelectorAll('.ww__aantal');
+const aantalInWinkelwagen = document.getElementById('ww__aantal');
 
 xhr.onreadystatechange = () => {
     if(xhr.readyState == 4 && xhr.status == 200) {
@@ -20,9 +20,14 @@ const ww = {
     bestelling: [],
 
     boekToevoegen(obj) {
-        ww.bestelling.push(obj);
+        let gevonden = this.bestelling.filter( b => b.ean == obj.ean);
+
+        if (gevonden.length == 0) {
+            this.bestelling.push(obj);
+        }
         aantalInWinkelwagen.innerHTML = this.bestelling.length;
-              
+        localStorage.wwBestelling = JSON.stringify(this.bestelling);
+        this.uitvoeren();
     },
 
     dataOphalen() {
@@ -79,12 +84,7 @@ const boekObject = {
             return bool;
         })
     },
-    datumOmzetten(datumString) {
-        let datum = new Date(datumString);
-        let jaar  = datum.getFullYear();
-        let maand = this.getMaandnaam(datum.getMonth());
-        return `${maand} ${jaar}`;
-    },
+
     sorteren() {
         if(this.es == 'titel') {
             this.data.sort( (a,b) => ( a.titel.toUpperCase() > b.titel.toUpperCase() ) ? this.oplopend : -1*this.oplopend);
@@ -103,6 +103,8 @@ const boekObject = {
         this.sorteren();
         let htmlUitvoer = "";
         this.data.forEach( boek => {
+            boek.bestelAantal = 0;
+
             let titel = "";
             if(boek.voortitel) {
                 titel += boek.voortitel + " "
@@ -138,11 +140,20 @@ const boekObject = {
                 e.preventDefault();
                 let boekID = e.target.getAttribute('data-role');
                 let gekliktBoek = this.data.filter( b => b.ean == boekID);
+                gekliktBoek[0].bestelAantal ++;
                 ww.boekToevoegen(gekliktBoek[0]);
 
             })
         });
     },
+
+    datumOmzetten(datumString) {
+        let datum = new Date(datumString);
+        let jaar  = datum.getFullYear();
+        let maand = this.getMaandnaam(datum.getMonth());
+        return `${maand} ${jaar}`;
+    },
+
     getMaandnaam(m) {
         let maand = "";
         switch(m) {
