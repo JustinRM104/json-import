@@ -43,7 +43,7 @@ const ww = {
             titel += boek.titel; 
 
             html += '<tr>';
-            html += `<td><img src="${boek.cover}" alt="${titel}" class="bestelFormulier__cover"><td>`;
+            html += `<td><img src="${boek.cover}" alt="${titel}" class="bestelformulier__cover"><td>`;
             html += `<td>${titel}</td>`
             html += `<td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>`
             html += '<tr>';

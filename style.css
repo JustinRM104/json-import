@@ -100,15 +100,15 @@ body{
     }
 }
 
-#haalFormulier {
+#haalformulier {
     display: none;
 }
 
-#haalFormulier:checked ~ .bestelFormulier {
+#haalFormulier:checked ~ .bestelformulier {
     transform: translateX(0vw);
 }
 
-.bestelFormulier {
+.bestelformulier {
     background-color: whitesmoke;
     position: absolute;
     width: 90vw;
@@ -123,6 +123,6 @@ body{
     transition: transform 1s ease-out;
 }
 
-.bestelFormulier__cover {
+.bestelformulier__cover {
     height: 3em;
 }
