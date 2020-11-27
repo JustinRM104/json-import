@@ -21,20 +21,45 @@ const ww = {
 
     boekToevoegen(obj) {
         ww.bestelling.push(obj);
-        aantalInWinkelwagen.innerHTML = this.bestelling.length;       
-    },
-
-    dataOpslaan() {
-        localStorage.wwBestelling = JSON.stringify(this.bestelling);
+        aantalInWinkelwagen.innerHTML = this.bestelling.length;
+              
     },
 
     dataOphalen() {
         this.bestelling = JSON.parse(localStorage.wwBestelling);
+        this.uitvoeren()
+    },
+
+    uitvoeren() {
+        let html = '<table>';
+        let totaal = 0;
+        this.bestelling.forEach( boek => {
+            let titel = "";
+            if(boek.voortitel) {
+                titel += boek.voortitel + " "
+            }
+            titel += boek.titel; 
+
+            html += '<tr>';
+            html += `<td><img src="${boek.cover}" alt="${titel}" class="bestelFormulier__cover"><td>`;
+            html += `<td>${titel}</td>`
+            html += `<td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>`
+            html += '<tr>';
+            totaal += boek.prijs;
+        });
+        html += `
+        <tr>
+        <td colspan="3">Totaal</td>
+        <td>${totaal.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>
+        </tr>`;
+        html += '</table>';
+        document.getElementById("uitvoer").innerHTML = html
         aantalInWinkelwagen.innerHTML = ww.bestelling.length;
-    } 
+    }
 }
 
 ww.dataOphalen();
+ww.uitvoeren();
 
 const boekObject = {
     taalFilter: ['Engels', 'Duits', 'Nederlands'],
