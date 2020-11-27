@@ -26,7 +26,9 @@ const ww = {
     },
 
     dataOphalen() {
-        this.bestelling = JSON.parse(localStorage.wwBestelling);
+        if (localStorage.wwBestelling) {
+            this.bestelling = JSON.parse(localStorage.wwBestelling);
+        }
         this.uitvoeren()
     },
 
