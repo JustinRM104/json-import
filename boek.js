@@ -56,7 +56,10 @@ const ww = {
             html += '<tr>';
             html += `<td><img src="${boek.cover}" alt="${titel}" class="bestelformulier__cover"><td>`;
             html += `<td>${titel}</td>`
-            html += `<td>${boek.bestelAantal }</td>`
+            html += `<td class="bestelformulier__aantal">
+            <i class="fas fa-arrow-down bestelformulier__verlaag" data-role="${boek.ean}></i>
+            ${boek.bestelAantal }
+            <i class="fas fa-arrow-up bestelformulier__verhoog" data-role="${boek.ean}></i></td>`
             html += `<td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>`
             html += `<td><i class="fas fa-trash bestelformulier__trash" data-role="${boek.ean}"></i></td>`
             html += '<tr>';

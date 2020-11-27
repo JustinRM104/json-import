@@ -127,3 +127,12 @@ body{
 .bestelformulier__cover {
     height: 3em;
 }
+
+.bestelformulier__trash, .bestelformulier__verlaag, .bestelformulier__verhoog {
+    padding: 0 1em;
+    cursor: pointer;
+}
+
+.bestelformulier__trash:hover, .bestelformulier__verlaag:hover, .bestelformulier__verhoog:hover {
+    color: red;
+}
