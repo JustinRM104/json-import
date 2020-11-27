@@ -58,7 +58,7 @@ const ww = {
             html += `<td>${titel}</td>`
             html += `<td class="bestelformulier__aantal">
             <i class="fas fa-arrow-down bestelformulier__verlaag" data-role="${boek.ean}></i>
-            ${boek.bestelAantal }
+            ${boek.bestelAantal}
             <i class="fas fa-arrow-up bestelformulier__verhoog" data-role="${boek.ean}></i></td>`
             html += `<td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>`
             html += `<td><i class="fas fa-trash bestelformulier__trash" data-role="${boek.ean}"></i></td>`
@@ -76,6 +76,39 @@ const ww = {
         aantalInWinkelwagen.innerHTML = totaalBesteld;
 
         this.trashActiveren();
+        this.hogerLagerActiveren();
+    },
+
+    hogerLagerActiveren() {
+        let hogerKnoppen = document.querySelectorAll('.bestelformulier__verhoog');
+
+        hogerKnoppen.forEach(knop => {
+            knop.addEventListener('click', e => {
+                let ophoogID = e.target.getAttribute('data-role');
+                let opTeHogenBoek = this.bestelling.filter( boek => boek.ean == ophoogID);
+                opTeHogenBoek[0].bestelAantal ++;
+                localStorage.wwBestelling = JSON.stringify(this.bestelling);
+                this.uitvoeren();
+            })
+        });
+
+        let lagerKnoppen = document.querySelectorAll('.bestelformulier__verlaag');
+
+        lagerKnoppen.forEach(knop => {
+            knop.addEventListener('click', e => {
+                let verlaagID = e.target.getAttribute('data-role');
+                let teVerlagenAantal = this.bestelling.filter( boek => boek.ean == verlaagID);
+                console.log(teVerlagenAantal);
+                if (teVerlagenAantal[0].bestelAantal > 1) {
+                    teVerlagenAantal[0].bestelAantal --;
+                } else {
+                    this.bestelling = this.bestelling.filter( bk => bk.ean != verlaagID);
+                }
+
+                localStorage.wwBestelling = JSON.stringify(this.bestelling);
+                this.uitvoeren();
+            })
+        });       
     },
 
     trashActiveren() {
