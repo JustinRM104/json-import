@@ -50,9 +50,10 @@ const ww = {
             html += '<tr>';
             html += `<td><img src="${boek.cover}" alt="${titel}" class="bestelformulier__cover"><td>`;
             html += `<td>${titel}</td>`
+            html += `<td>${boek.bestelAantal }</td>`
             html += `<td>${boek.prijs.toLocaleString('nl-NL', {currency: 'EUR', style: 'currency'})}</td>`
             html += '<tr>';
-            totaal += boek.prijs;
+            totaal += boek.prijs * boek.bestelAantal;
         });
         html += `
         <tr>
@@ -194,7 +195,7 @@ const changeSortOption = () => {
 
 selectSort.addEventListener('change', changeSortOption);
 
-document.querySelectorAll('.filteren__rb').forEach( rb => rb.addEventListener('change', () => {
+document.querySelectorAll('.filter__rb').forEach( rb => rb.addEventListener('change', () => {
     boekObject.oplopend = rb.value;
     boekObject.uitvoeren();
 }))
